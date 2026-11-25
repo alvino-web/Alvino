@@ -1,0 +1,826 @@
+/* ==========================================================================
+   PORTFOLIO ALVINO - SISWA SMK JURUSAN PPLG
+   Tema: Dark Modern (HTML & CSS murni tanpa framework & tanpa JS)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS VARIABLES & RESET DASAR
+   -------------------------------------------------------------------------- */
+:root {
+  /* Palet Warna Sesuai Permintaan */
+  --bg-main: #0f172a;        /* Background utama */
+  --bg-card: #1e293b;        /* Background card */
+  --bg-card-hover: #273549;  /* Sedikit lebih terang untuk interaksi */
+  --text-primary: #f8fafc;   /* Text judul & teks penting */
+  --text-secondary: #94a3b8; /* Text deskripsi & pendukung */
+  --accent: #38bdf8;         /* Warna aksen cyan/sky */
+  --accent-glow: rgba(56, 189, 248, 0.25);
+  --border-color: rgba(255, 255, 255, 0.08);
+
+  /* Tipografi & Spasi */
+  --font-family: 'Poppins', sans-serif;
+  --nav-height: 75px;
+  --border-radius: 12px;
+  --transition: all 0.3s ease;
+}
+
+/* Reset margin, padding & box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling saat mengklik anchor link */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height); /* Mencegah judul tertutup navbar sticky */
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Container utama untuk membatasi lebar konten di tengah */
+.container {
+  width: 90%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   2. NAVBAR & HEADER (STICKY)
+   -------------------------------------------------------------------------- */
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: var(--nav-height);
+  background-color: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1120px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo .img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.logo:hover .img {
+  transform: scale(1.05);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+}
+
+.logo .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Navigasi */
+.nav-menu {
+  display: flex;
+  align-items: center;
+}
+
+/* Daftar Menu */
+.nav-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.5rem 0.2rem;
+  position: relative;
+  transition: var(--transition);
+}
+
+/* Efek hover garis bawah pada navigasi */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--accent);
+  transition: var(--transition);
+  border-radius: 2px;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   3. SECTION HEADER (REUSABLE)
+   -------------------------------------------------------------------------- */
+section {
+  padding: 5rem 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+/* Garis aksen kecil di bawah judul section */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--accent);
+  margin: 0.6rem auto 0;
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. BUTTONS (REUSABLE)
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+/* Tombol Utama (Accent) */
+.btn-primary {
+  background-color: var(--accent);
+  color: #0b1324;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: #60a5fa;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.45);
+}
+
+/* Tombol Sekunder (Outline) */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* --------------------------------------------------------------------------
+   5. SECTION 1: HERO / HOME
+   -------------------------------------------------------------------------- */
+.hero-section {
+  min-height: calc(90vh - var(--nav-height));
+  display: flex;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3.5rem;
+}
+
+.hero-content {
+  flex: 1.2;
+}
+
+.badge-role {
+  display: inline-block;
+  background-color: rgba(56, 189, 248, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 0.35rem 0.9rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+.hero-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.hero-title .highlight {
+  color: var(--accent);
+  position: relative;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-bottom: 1.2rem;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  max-width: 540px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Profile Image Wrapper */
+.hero-image-wrapper {
+  flex: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-frame {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  padding: 8px;
+  background: linear-gradient(135deg, var(--accent), #1e293b, rgba(56, 189, 248, 0.4));
+  box-shadow: 0 10px 35px rgba(56, 189, 248, 0.2);
+  transition: var(--transition);
+}
+
+.image-frame:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(56, 189, 248, 0.35);
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: var(--bg-card);
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   6. SECTION 2: ABOUT ME
+   -------------------------------------------------------------------------- */
+.about-section {
+  background-color: rgba(15, 23, 42, 0.6);
+  border-top: 1px solid var(--border-color);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 2rem;
+}
+
+.about-bio-card,
+.about-info-card {
+  background-color: var(--bg-card);
+  padding: 2.2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+}
+
+.about-bio-card:hover,
+.about-info-card:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+  transform: translateY(-4px);
+}
+
+.about-bio-card h3,
+.about-info-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.about-bio-card p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.about-bio-card strong {
+  color: var(--accent);
+}
+
+/* List Biodata */
+.info-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info-item {
+  display: grid;
+  grid-template-columns: 80px 15px 1fr;
+  align-items: baseline;
+  font-size: 0.95rem;
+}
+
+.info-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.info-separator {
+  color: var(--text-secondary);
+}
+
+.info-value {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   7. SECTION 3: SKILLS
+   -------------------------------------------------------------------------- */
+.skills-section {
+  border-top: 1px solid var(--border-color);
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.skill-card {
+  background-color: var(--bg-card);
+  padding: 1.8rem 1.2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 130px;
+  max-width: 160px;
+}
+
+.skill-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  transition: var(--transition);
+}
+
+.skill-card:hover .skill-icon img {
+  transform: scale(1.12);
+}
+
+.skill-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.skill-tag {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.badge-learning {
+  color: var(--accent);
+  background-color: rgba(56, 189, 248, 0.12);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* Hover Efek Skill */
+.skill-card:hover {
+  transform: translateY(-6px);
+  background-color: var(--bg-card-hover);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.18);
+}
+
+/* --------------------------------------------------------------------------
+   8. SECTION 4: PROJECTS
+   -------------------------------------------------------------------------- */
+.projects-section {
+  background-color: rgba(15, 23, 42, 0.6);
+  border-top: 1px solid var(--border-color);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.project-card {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Efek Hover Naik pada Card Project */
+.project-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 12px 30px rgba(56, 189, 248, 0.18);
+}
+
+.project-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  background-color: #0b1324;
+}
+
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* Efek Zoom Halus pada Gambar Project */
+.project-card:hover .project-img {
+  transform: scale(1.05);
+}
+
+.project-category {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.project-body {
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.project-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.project-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.project-footer {
+  margin-top: auto;
+}
+
+.btn-project {
+  display: inline-block;
+  background-color: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.55rem 1.2rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.btn-project:hover {
+  background-color: var(--accent);
+  color: #0b1324;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   9. SECTION 5: CONTACT ME
+   -------------------------------------------------------------------------- */
+.contact-section {
+  border-top: 1px solid var(--border-color);
+}
+
+.contact-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contact-card {
+  background-color: var(--bg-card);
+  padding: 1.6rem 1.8rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  transition: var(--transition);
+  flex: 1 1 290px;
+  max-width: 340px;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  background-color: var(--bg-card-hover);
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.15);
+}
+
+.contact-icon {
+  font-size: 1.8rem;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(56, 189, 248, 0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  flex-shrink: 0;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Mencegah overflow flex child */
+}
+
+.contact-title {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.2rem;
+}
+
+.contact-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: var(--transition);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.contact-link:hover {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   10. FOOTER
+   -------------------------------------------------------------------------- */
+.footer {
+  border-top: 1px solid var(--border-color);
+  background-color: #0b1324;
+  padding: 2.2rem 0;
+  text-align: center;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.footer-copyright {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.footer-note {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------------------
+   11. RESPONSIVE DESIGN (MEDIA QUERIES)
+   -------------------------------------------------------------------------- */
+
+/* Tablet & Layar Sedang (max-width: 900px) */
+@media (max-width: 900px) {
+  .hero-container {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 2.5rem;
+  }
+
+  .hero-desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .image-frame {
+    width: 250px;
+    height: 250px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* HP / Mobile (max-width: 600px) */
+@media (max-width: 600px) {
+  :root {
+    --nav-height: auto;
+  }
+
+  .header {
+    height: auto;
+    padding: 0.8rem 0;
+  }
+
+  .nav-container {
+    height: auto;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .nav-list {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+  }
+
+  .hero-title {
+    font-size: 2.1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+  }
+
+  .image-frame {
+    width: 200px;
+    height: 200px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .skills-grid {
+    gap: 1rem;
+  }
+
+  .skill-card {
+    flex: 1 1 120px;
+    padding: 1.4rem 1rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact-card {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .info-item {
+    grid-template-columns: 75px 12px 1fr;
+    font-size: 0.9rem;
+  }
+}
